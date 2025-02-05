@@ -16,7 +16,7 @@ import (
 
 var (
 	project           = os.Getenv("PROJECT")
-	location          = os.Getenv("LOCATION")
+	location          = os.Getenv("REGION")
 	vertexCFAuthToken = os.Getenv("VERTEX_CF_AUTH_TOKEN")
 	modelName         = os.Getenv("MODEL_NAME")
 	ragCorpus         = os.Getenv("RAG_CORPUS")

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+FUNCTION_TARGET=HandleRequest LOCAL_ONLY=true go run cmd/main.go
