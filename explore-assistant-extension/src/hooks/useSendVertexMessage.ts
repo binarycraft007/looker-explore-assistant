@@ -85,7 +85,6 @@ const useSendVertexMessage = () => {
     useSelector((state: RootState) => state.assistant as AssistantState)
 
   const currentExploreKey = currentExplore.exploreKey
-  const exploreRefinementExamples = examples.exploreRefinementExamples[currentExploreKey]
 
   const vertextBigQuery = async (
     contents: string,
@@ -146,14 +145,7 @@ const useSendVertexMessage = () => {
       ----------
       A user is iteractively asking questions to generate an explore URL in Looker. The user is refining his questions by adding more context. The additional prompts he is adding could have conflicting or duplicative information: in those cases, prefer the most recent prompt. 
 
-      Here are some example prompts the user has asked so far and how to summarize them:
-
-${exploreRefinementExamples && exploreRefinementExamples
-  .map((item) => {
-    const inputText = '"' + item.input.join('", "') + '"'
-    return `- The sequence of prompts from the user: ${inputText}. The summarized prompts: "${item.output}"`
-  })
-  .join('\n')}
+      Here are some example prompts the user has asked so far and how to summarize them(fetch examples from retrieval):
 
       Conversation so far
       ----------
@@ -170,7 +162,7 @@ ${exploreRefinementExamples && exploreRefinementExamples
 
       return response
     },
-    [exploreRefinementExamples],
+    [],
   )
 
   const isSummarizationPrompt = async (prompt: string) => {
@@ -296,8 +288,6 @@ ${exploreRefinementExamples && exploreRefinementExamples
     async (
       prompt: string,
       dimensions: any[],
-      //measures: any[],
-      //exploreGenerationExamples: any[],
     ) => {
       try {
         const contents = `
