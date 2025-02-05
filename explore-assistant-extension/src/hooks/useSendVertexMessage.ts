@@ -296,8 +296,8 @@ ${exploreRefinementExamples && exploreRefinementExamples
     async (
       prompt: string,
       dimensions: any[],
-      measures: any[],
-      exploreGenerationExamples: any[],
+      //measures: any[],
+      //exploreGenerationExamples: any[],
     ) => {
       try {
         const contents = `
@@ -307,31 +307,13 @@ ${exploreRefinementExamples && exploreRefinementExamples
             You are a developer who would transalate questions to a structured Looker URL query based on the following instructions.
 
             Instructions:
-              - choose only the fields in the below lookml metadata
+              - choose only the fields in the lookml metadata(fetch using rag retrieval)
               - prioritize the field description, label, tags, and name for what field(s) to use for a given description
               - generate only one answer, no more.
-              - use the Examples (at the bottom) for guidance on how to structure the Looker url query
+              - use the Examples (fetch using rag retrieval) for guidance on how to structure the Looker url query
               - try to avoid adding dynamic_fields, provide them when very similar example is found in the bottom
               - never respond with sql, always return an looker explore url as a single string
               - response should start with fields= , as in the Examples section at the bottom  
-
-            LookML Metadata
-            ----------
-
-            Dimensions Used to group by information (follow the instructions in tags when using a specific field; if map used include a location or lat long dimension;):
-
-          ${dimensions.map(formatContent).join('\n')}
-
-            Measures are used to perform calculations (if top, bottom, total, sum, etc. are used include a measure):
-
-          ${measures.map(formatContent).join('\n')}
-
-            Example
-            ----------
-
-          ${exploreGenerationExamples && exploreGenerationExamples
-            .map((item) => `input: "${item.input}" ; output: ${item.output}`)
-            .join('\n')}
 
             Input
             ----------
